@@ -6,13 +6,42 @@
   h1 {
     @apply text-5xl;
   }
+
   h2 {
     @apply text-4xl;
   }
+
   h3 {
     @apply text-3xl;
   }
+
   h4 {
     @apply text-2xl;
+  }
+
+  /*base links inputs and buttons*/
+
+  .link{
+    @apply underline text-sky-500 hover:text-sky-200;
+  }
+
+  a:not(.clean){
+    @apply link;
+  }
+
+  .btn{
+    @apply py-2 px-4 bg-stone-50 hover:border-stone-200 rounded-lg border border-stone-100 cursor-pointer;
+  }
+
+  .danger{
+    @apply text-red-500;
+  }
+
+  input:not(.clean), button:not(.clean)[type=submit]{
+    @apply btn;
+  }
+  
+  input[type="text"], input[type="number"]{
+    @apply border-gray-300;
   }
 }

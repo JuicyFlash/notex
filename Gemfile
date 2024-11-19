@@ -65,3 +65,5 @@ group :test do
 end
 
 gem "slim-rails", "~> 3.6"
+
+gem "amazing_print", "~> 1.6"
