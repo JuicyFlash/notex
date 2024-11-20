@@ -1,0 +1,3 @@
+.py-3.px-1
+  = form_with(model: workspace, data: { turbo_frame: '_top' }) do |form|   
+    = form.text_field :title, class: "w-full", autofocus: true, onfocus: "this.select()"

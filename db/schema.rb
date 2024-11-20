@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_17_195228) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_19_224312) do
+  create_table "pages", force: :cascade do |t|
+    t.integer "workspace_id", null: false
+    t.integer "user_id", null: false
+    t.string "title"
+    t.boolean "frontpage", default: false
+    t.string "ancestry", default: "/"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_pages_on_user_id"
+    t.index ["workspace_id"], name: "index_pages_on_workspace_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "ip_address"
@@ -28,5 +40,16 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_17_195228) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  create_table "workspaces", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+    t.index ["user_id"], name: "index_workspaces_on_user_id"
+  end
+
+  add_foreign_key "pages", "users"
+  add_foreign_key "pages", "workspaces"
   add_foreign_key "sessions", "users"
+  add_foreign_key "workspaces", "users"
 end

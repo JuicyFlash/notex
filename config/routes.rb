@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :pages
+  resources :workspaces
   resource :session
   resources :passwords, param: :token
 
@@ -7,5 +9,5 @@ Rails.application.routes.draw do
   get :sign_up, to: "users#new"
   post :sign_up, to: "users#create"
 
-  root "home#index"
+  root "pages#index"
 end

@@ -1,0 +1,13 @@
+= content_for :main do 
+  .flex.h-full
+    .leftcol.bg-stone-100.flex.flex-col class="w-[240px]"
+      = turbo_frame_tag "workspace", class: "flex"
+        = link_to truncate(Current.workspace.title, length: 18), edit_workspace_path(Current.workspace), class: "clean font-semibold px-3 py-4"
+      .flex-1
+      
+      .m-2
+        = button_to "Выход", session_path, class: 'w-full', method: :delete
+    .flex-1
+      = yield
+
+= render template: 'layouts/application'
