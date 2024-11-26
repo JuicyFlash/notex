@@ -21,15 +21,13 @@ class PagesController < ApplicationController
 
   # POST /pages or /pages.json
   def create
-    @page = Page.new(page_params)
+    @page = Page.new(workspace: Current.workspace, user: Current.user)
 
     respond_to do |format|
       if @page.save
         format.html { redirect_to @page, notice: "Page was successfully created." }
-        format.json { render :show, status: :created, location: @page }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @page.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -38,11 +36,12 @@ class PagesController < ApplicationController
   def update
     respond_to do |format|
       if @page.update(page_params)
-        format.html { redirect_to @page, notice: "Page was successfully updated." }
-        format.json { render :show, status: :ok, location: @page }
+        if @page.previous_changes.keys.include?("frontpage") && @page.frontpage?
+          Current.workspace.pages.where.not(id: @page.id).update_all frontpage: false
+        end
+        format.html { redirect_to @page }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @page.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -65,6 +64,6 @@ class PagesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def page_params
-      params.expect(page: [ :workspace_id, :user_id, :title, :frontpage, :ancestry ])
+      params.expect(page: [:title, :frontpage ])
     end
 end

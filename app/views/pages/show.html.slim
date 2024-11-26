@@ -1,10 +1,10 @@
-p style="color: green" = notice
-
-== render @page
-
-div
-  => link_to "Edit this page", edit_page_path(@page)
-  '|
-  =< link_to "Back to pages", pages_path
-
-  = button_to "Destroy this page", @page, method: :delete
+.p-10.col.items-center.space-y-2
+  = turbo_frame_tag "page"
+    .py-2
+      = link_to @page.d_title, edit_page_path(@page), class: "clean h2"
+  .text-sm = SecureRandom.urlsafe_base64
+  .row
+    - unless @page.frontpage?
+      = button_to [@page, page: { frontpage: true }], method: :patch, class: "clean btn"
+        = tabler_icon 'home', size: 20
+    = button_to "Удалить страницу", @page, method: :delete, class: "danger"

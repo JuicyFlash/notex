@@ -3,20 +3,36 @@
 @tailwind utilities;
 
 @layer components {
-  h1 {
+  .h1 {
     @apply text-5xl;
   }
 
-  h2 {
+  .h2 {
     @apply text-4xl;
   }
 
-  h3 {
+  .h3 {
     @apply text-3xl;
   }
 
-  h4 {
+  .h4 {
     @apply text-2xl;
+  }
+
+  h1 {
+    @apply h1;
+  }
+
+  h2 {
+    @apply h2;
+  }
+
+  h3 {
+    @apply h3;
+  }
+
+  h4 {
+    @apply h4;
   }
 
   /*base links inputs and buttons*/
@@ -43,5 +59,21 @@
   
   input[type="text"], input[type="number"]{
     @apply border-gray-300;
+  }
+
+  /*page-link*/
+
+  .page-link{
+    @apply px-2 py-1 text-gray-400 hover:bg-gray-200 hover:text-gray-700 rounded row space-x-2;
+  }
+
+  /*gridiron*/
+
+  .col{
+    @apply flex flex-col;
+  }
+
+  .row{
+    @apply flex items-center;
   }
 }

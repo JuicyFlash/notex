@@ -14,6 +14,16 @@
 
       
       .flex-1
+        = link_to root_url, class: 'clean page-link'
+          = tabler_icon 'home', size: 20
+          span Дом страница
+        #pages.col
+          - Current.workspace.pages.each do |page|
+            = link_to  page, class: 'clean page-link'
+              = tabler_icon page.frontpage? ? 'home' : 'file-description', size: 20
+              span #{page.d_title}
+        .m-2
+          = button_to "Создать страницу", pages_path, class: 'w-full flex space-x-2 items-center justify-center'
       .m-2
         = button_to  session_path, class: 'w-full flex space-x-2 items-center justify-center', method: :delete do 
           = tabler_icon 'logout', size: 23
