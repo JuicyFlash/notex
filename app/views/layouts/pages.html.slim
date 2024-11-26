@@ -1,12 +1,23 @@
 = content_for :main do 
   .flex.h-full
-    .leftcol.bg-stone-100.flex.flex-col class="w-[240px]"
-      = turbo_frame_tag "workspace", class: "flex"
+    .leftcol.bg-stone-100.flex.flex-col class="w-[240px]"      
+      = turbo_frame_tag "workspace", class: "flex space-x-0 items-center"
+        = render layout: 'dropdown', locals: { btn_classes: 'clean px-2 py-2 hover:bg-gray-100 rounded', surface_css: 'mx-1 left-0 bg-white drop-shadows-xl' } do 
+          .flex.flex-col 
+            - Current.user.workspaces. each do |ws|            
+              = link_to ws.title, switch_to_workspace_path(ws), class: 'clean px-2 py-1 hover:bg-gray-100', data: { turbo_frame: '_top' }
+          
+          = button_to "Создать пространство", workspaces_path(workspace: { title: "Пространство #{Current.user.workspaces.count + 1 }"}), class: 'clean px-2 py-2 hover:bg-gray-100 rounded', data: { turbo_frame: '_top' }
+
         = link_to truncate(Current.workspace.title, length: 18), edit_workspace_path(Current.workspace), class: "clean font-semibold px-3 py-4"
-      .flex-1
+        .flex-1
+
       
+      .flex-1
       .m-2
-        = button_to "Выход", session_path, class: 'w-full', method: :delete
+        = button_to  session_path, class: 'w-full flex space-x-2 items-center justify-center', method: :delete do 
+          = tabler_icon 'logout', size: 23
+          span Выйти
     .flex-1
       = yield
 

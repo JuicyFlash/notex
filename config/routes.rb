@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :pages
-  resources :workspaces
+  resources :workspaces do
+    get :switch_to, on: :member
+  end
   resource :session
   resources :passwords, param: :token
 

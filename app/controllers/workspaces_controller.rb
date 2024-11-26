@@ -1,5 +1,5 @@
 class WorkspacesController < ApplicationController
-  before_action :set_workspace, only: %i[ show edit update destroy ]
+  before_action :set_workspace, only: %i[ show edit update destroy switch_to]
 
   # GET /workspaces or /workspaces.json
   def index
@@ -25,23 +25,30 @@ class WorkspacesController < ApplicationController
     @workspace.user = Current.user
     respond_to do |format|
       if @workspace.save
-        format.html { redirect_to @workspace, notice: "Workspace was successfully created." }
-        format.json { render :show, status: :created, location: @workspace }
+        set_current_workspace(@workspace)
+        format.html { redirect_to root_url }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @workspace.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # PATCH/PUT /workspaces/1 or /workspaces/1.json
   def update
+    @workspace.update(workspace_params)
     respond_to do |format|
       if @workspace.update(workspace_params)
-        format.html { redirect_to root_url, notice: "Workspace was successfully updated." }
+      format.html { redirect_to root_url }
+       # format.html { render partial: "workspaces/update" }
+        #render 'update'
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
+      # if turbo_frame_request?
+      #   render partial: "some_turbo_frame_partial"
+      # else
+      #   render partial: "some_other_partial"
+      # end
     end
   end
 
@@ -51,8 +58,12 @@ class WorkspacesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to root_url, status: :see_other, notice: "Workspace was successfully destroyed." }
-      format.json { head :no_content }
     end
+  end
+
+  def switch_to
+    set_current_workspace(@workspace)
+    redirect_to root_url
   end
 
   private

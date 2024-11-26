@@ -67,3 +67,5 @@ end
 gem "slim-rails", "~> 3.6"
 
 gem "amazing_print", "~> 1.6"
+
+gem "tabler_icons_ruby", "~> 3.11"

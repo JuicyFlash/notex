@@ -29,7 +29,7 @@ module Workspacable
   end
 
   def set_current_workspace(workspace)
-     Current.workspace
+     Current.workspace = workspace
      session[:cw_id] = Current.workspace.id
   end
 end
