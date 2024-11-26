@@ -18,7 +18,7 @@
           = tabler_icon 'home', size: 20
           span Дом страница
         #pages.col
-          - Current.workspace.pages.each do |page|
+          - Current.workspace.pages.roots.each do |page|
             = link_to  page, class: 'clean page-link'
               = tabler_icon page.frontpage? ? 'home' : 'file-description', size: 20
               span #{page.d_title}
